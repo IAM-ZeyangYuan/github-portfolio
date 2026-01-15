@@ -3,177 +3,64 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Your Name — Projects</title>
-  <meta name="description" content="A simple one-page portfolio with three projects." />
+  <title>Your Name — Portfolio</title>
+  <meta name="description" content="Portfolio with three projects." />
   <style>
-    :root{
-      --bg:#0b1220;
-      --card:#111a2e;
-      --text:#e8eefc;
-      --muted:#b7c2df;
-      --line:#223056;
-      --accent:#7aa2ff;
-    }
+    :root{--bg:#0b1220;--card:#111a2e;--text:#e8eefc;--muted:#b7c2df;--line:#223056;--accent:#7aa2ff;}
     *{box-sizing:border-box}
-    body{
-      margin:0;
-      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, "Apple Color Emoji","Segoe UI Emoji";
-      color:var(--text);
-      background: radial-gradient(900px 500px at 20% 10%, #172144 0%, var(--bg) 55%) fixed;
-      line-height:1.5;
-    }
-    a{color:var(--accent); text-decoration:none}
-    a:hover{text-decoration:underline}
-    .wrap{max-width:980px; margin:0 auto; padding:48px 20px 72px}
-    header{
-      display:flex; flex-wrap:wrap; gap:18px; align-items:flex-start; justify-content:space-between;
-      padding-bottom:22px; border-bottom:1px solid var(--line);
-    }
-    .title h1{margin:0; font-size:32px; letter-spacing:.2px}
-    .title p{margin:8px 0 0; color:var(--muted); max-width:60ch}
-    .links{display:flex; gap:10px; flex-wrap:wrap; margin-top:4px}
-    .pill{
-      display:inline-flex; align-items:center; gap:8px;
-      border:1px solid var(--line); background:rgba(17,26,46,.7);
-      padding:8px 12px; border-radius:999px; color:var(--text);
-    }
-    main{padding-top:26px}
-    .grid{
-      display:grid; gap:16px;
-      grid-template-columns: repeat(12, 1fr);
-    }
-    .card{
-      grid-column: span 12;
-      border:1px solid var(--line);
-      background: rgba(17,26,46,.75);
-      border-radius:16px;
-      padding:18px;
-      box-shadow: 0 10px 30px rgba(0,0,0,.25);
-    }
-    @media (min-width: 780px){
-      .card{grid-column: span 4}
-    }
-    .card h2{margin:0 0 6px; font-size:18px}
-    .card p{margin:0 0 12px; color:var(--muted)}
-    .tags{display:flex; flex-wrap:wrap; gap:8px; margin:0 0 14px; padding:0; list-style:none}
-    .tag{
-      font-size:12px; color:var(--muted);
-      border:1px solid var(--line);
-      padding:4px 8px; border-radius:999px;
-      background: rgba(11,18,32,.35);
-    }
-    .actions{display:flex; gap:10px; flex-wrap:wrap}
-    .btn{
-      display:inline-flex; align-items:center; justify-content:center;
-      padding:9px 12px; border-radius:10px;
-      border:1px solid var(--line);
-      background: rgba(11,18,32,.35);
-      color:var(--text);
-      min-width:110px;
-    }
-    .btn.primary{
-      background: rgba(122,162,255,.16);
-      border-color: rgba(122,162,255,.45);
-    }
-    footer{
-      margin-top:34px;
-      padding-top:18px;
-      border-top:1px solid var(--line);
-      color:var(--muted);
-      font-size:14px;
-      display:flex; justify-content:space-between; gap:12px; flex-wrap:wrap;
-    }
-    .small{color:var(--muted)}
+    body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial;color:var(--text);
+      background:radial-gradient(900px 500px at 20% 10%, #172144 0%, var(--bg) 55%) fixed;line-height:1.5;}
+    a{color:var(--accent);text-decoration:none} a:hover{text-decoration:underline}
+    .wrap{max-width:980px;margin:0 auto;padding:48px 20px 72px}
+    header{padding-bottom:18px;border-bottom:1px solid var(--line)}
+    h1{margin:0;font-size:32px}
+    p{color:var(--muted);max-width:70ch}
+    .grid{display:grid;gap:16px;grid-template-columns:repeat(12,1fr);margin-top:22px}
+    .card{grid-column:span 12;border:1px solid var(--line);background:rgba(17,26,46,.75);
+      border-radius:16px;padding:18px;box-shadow:0 10px 30px rgba(0,0,0,.25)}
+    @media(min-width:780px){.card{grid-column:span 4}}
+    .card h2{margin:0 0 6px;font-size:18px}
+    .card p{margin:0 0 12px}
+    .btn{display:inline-flex;align-items:center;justify-content:center;padding:9px 12px;border-radius:10px;
+      border:1px solid var(--line);background:rgba(11,18,32,.35);color:var(--text);min-width:120px}
+    .btn.primary{background:rgba(122,162,255,.16);border-color:rgba(122,162,255,.45)}
+    footer{margin-top:34px;padding-top:18px;border-top:1px solid var(--line);color:var(--muted);font-size:14px}
   </style>
 </head>
-
 <body>
   <div class="wrap">
     <header>
-      <div class="title">
-        <h1>Your Name</h1>
-        <p>
-          One-page overview of three projects. Replace the placeholders with your project names,
-          links, and descriptions.
-        </p>
-        <div class="links">
-          <a class="pill" href="https://github.com/your-username" target="_blank" rel="noreferrer">GitHub</a>
-          <a class="pill" href="mailto:you@example.com">Email</a>
-          <a class="pill" href="https://www.linkedin.com/in/your-handle/" target="_blank" rel="noreferrer">LinkedIn</a>
-        </div>
-      </div>
-      <div class="small">
-        <div>Last updated: <span id="updated"></span></div>
-      </div>
+      <h1>Your Name</h1>
+      <p>One-page portfolio with three projects. Click a project to view its page.</p>
     </header>
 
-    <main>
-      <div class="grid">
+    <main class="grid">
+      <section class="card">
+        <h2>Project 1 — Title</h2>
+        <p>Short description of what it is and what it does.</p>
+        <a class="btn primary" href="./projects/project-1/">Open Project</a>
+      </section>
 
-        <!-- Project 1 -->
-        <section class="card">
-          <h2>Project One — Short Title</h2>
-          <p>
-            1–2 sentences: what it does, who it’s for, and the core value. Keep it specific.
-          </p>
-          <ul class="tags">
-            <li class="tag">Tech 1</li>
-            <li class="tag">Tech 2</li>
-            <li class="tag">Category</li>
-          </ul>
-          <div class="actions">
-            <a class="btn primary" href="https://example.com" target="_blank" rel="noreferrer">Live Demo</a>
-            <a class="btn" href="https://github.com/your-username/project-one" target="_blank" rel="noreferrer">Source</a>
-          </div>
-        </section>
+      <section class="card">
+        <h2>Project 2 — Title</h2>
+        <p>Short description of what it is and what it does.</p>
+        <a class="btn primary" href="./projects/project-2/">Open Project</a>
+      </section>
 
-        <!-- Project 2 -->
-        <section class="card">
-          <h2>Project Two — Short Title</h2>
-          <p>
-            1–2 sentences: what it does, your contribution, and one notable feature.
-          </p>
-          <ul class="tags">
-            <li class="tag">Tech 1</li>
-            <li class="tag">Tech 2</li>
-            <li class="tag">Category</li>
-          </ul>
-          <div class="actions">
-            <a class="btn primary" href="https://example.com" target="_blank" rel="noreferrer">Live Demo</a>
-            <a class="btn" href="https://github.com/your-username/project-two" target="_blank" rel="noreferrer">Source</a>
-          </div>
-        </section>
-
-        <!-- Project 3 -->
-        <section class="card">
-          <h2>Project Three — Short Title</h2>
-          <p>
-            1–2 sentences: problem → solution → result. If you have a metric, add it (e.g., “reduced time by 30%”).
-          </p>
-          <ul class="tags">
-            <li class="tag">Tech 1</li>
-            <li class="tag">Tech 2</li>
-            <li class="tag">Category</li>
-          </ul>
-          <div class="actions">
-            <a class="btn primary" href="https://example.com" target="_blank" rel="noreferrer">Live Demo</a>
-            <a class="btn" href="https://github.com/your-username/project-three" target="_blank" rel="noreferrer">Source</a>
-          </div>
-        </section>
-
-      </div>
-
-      <footer>
-        <div>© <span id="year"></span> Your Name</div>
-        <div class="small">Hosted on GitHub Pages</div>
-      </footer>
+      <section class="card">
+        <h2>Project 3 — Title</h2>
+        <p>Short description of what it is and what it does.</p>
+        <a class="btn primary" href="./projects/project-3/">Open Project</a>
+      </section>
     </main>
+
+    <footer>
+      © <span id="year"></span> Your Name — Hosted on GitHub Pages
+    </footer>
   </div>
 
   <script>
-    const d = new Date();
-    document.getElementById("year").textContent = d.getFullYear();
-    document.getElementById("updated").textContent = d.toISOString().slice(0, 10);
+    document.getElementById("year").textContent = new Date().getFullYear();
   </script>
 </body>
 </html>
