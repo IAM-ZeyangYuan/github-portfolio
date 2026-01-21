@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Zeyang Yuan Soft Robotics Project</title>
+  <title>Soft Robotics Project</title>
 
   <style>
     :root{
@@ -125,8 +125,97 @@
 
     /* Small helper for section buttons inside cards */
     .card-actions{margin-top:12px}
+    /* Rotating image: slide-left only */
+    .shot{
+      will-change: opacity, transform;
+      transform-origin: center;
+    }
+    
+    /* slide-left transition states */
+    .rotator-slide-left-out{
+      opacity: 0;
+      transform: translateX(-14px);
+      transition: opacity 450ms ease, transform 450ms ease;
+    }
+    
+    .rotator-slide-left-in{
+      opacity: 1;
+      transform: translateX(0);
+      transition: opacity 450ms ease, transform 450ms ease;
+    }
+        
   </style>
 </head>
+
+  <!-- javascript that enables my img transition -->
+  <script>
+(() => {
+  const DEFAULT_INTERVAL = 3500;
+  const OUT_MS = 480; // should roughly match the CSS transition duration above
+
+  function parseList(str) {
+    return (str || "")
+      .split(",")
+      .map(s => s.trim())
+      .filter(Boolean);
+  }
+
+  function preload(urls) {
+    urls.forEach(u => { const i = new Image(); i.src = u; });
+  }
+
+  function startRotator(img) {
+    const urls = parseList(img.dataset.images);
+    if (urls.length <= 1) return;
+
+    const interval = Number(img.dataset.interval) || DEFAULT_INTERVAL;
+
+    // Ensure current src is in list; otherwise start at 0
+    const current = img.getAttribute("src") || urls[0];
+    let idx = urls.indexOf(current);
+    if (idx === -1) idx = 0;
+
+    preload(urls);
+
+    // baseline "in" state
+    img.classList.add("rotator-slide-left-in");
+
+    let timer = null;
+
+    const step = () => {
+      // transition out
+      img.classList.remove("rotator-slide-left-in");
+      img.classList.add("rotator-slide-left-out");
+
+      // after transition-out, swap src, then transition in
+      window.setTimeout(() => {
+        idx = (idx + 1) % urls.length;
+        img.src = urls[idx];
+
+        img.classList.remove("rotator-slide-left-out");
+        img.classList.add("rotator-slide-left-in");
+      }, OUT_MS);
+    };
+
+    // Pause on hover (optional)
+    const pause = () => { if (timer) window.clearInterval(timer); timer = null; };
+    const resume = () => { if (!timer) timer = window.setInterval(step, interval); };
+
+    img.addEventListener("mouseenter", pause);
+    img.addEventListener("mouseleave", resume);
+
+    // Pause when tab is hidden (optional)
+    document.addEventListener("visibilitychange", () => {
+      if (document.hidden) pause();
+      else resume();
+    });
+
+    resume();
+  }
+
+  document.querySelectorAll("img.js-rotator").forEach(startRotator);
+})();
+</script>
 
 <body>
   <div class="wrap">
@@ -163,7 +252,14 @@
         <h2>Experimental Methodology</h2>
         <p>High-level summary of your approach. Keep details for the Methodology page.</p>
         <div class="figure">
-          <img class="shot" src="./img/screen-1.png" alt="Methodology illustration">
+          <img
+            class="shot js-rotator"
+            data-rotator="slide-left"
+            data-interval="3500"
+            data-images="./img/bent_gel.png,./img/post_gel.jpg,./img/swollen.png"
+            src="./img/bent_gel.png"
+            alt="Card illustration"
+          >
           <div class="caption">Caption describing what the image shows.</div>
         </div>
 
