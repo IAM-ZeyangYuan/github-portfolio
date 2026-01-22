@@ -36,77 +36,60 @@
     h1{margin:0 0 6px; font-size:30px}
     .subtitle{margin:0; color:var(--muted); max-width:75ch}
 
-    .hero{
-      width:100%;
-      aspect-ratio: 16 / 9;
-      object-fit: cover;
-      border-radius:16px;
-      border:1px solid var(--line);
-      margin:18px 0 10px;
-      display:block;
-    }
-
     .grid{
       display:grid;
       gap:16px;
       grid-template-columns: repeat(12, 1fr);
       margin-top:16px;
     }
+
     .card{
-        grid-column:span 12;
-        border:1px solid var(--line);
-        background:rgba(17,26,46,.75);
-        border-radius:16px;
-        padding:18px;
-        box-shadow:0 10px 30px rgba(0,0,0,.25);
-      
-        /* appear on load */
-        opacity: 0;
-        transform: translateY(10px);
-        animation: cardIn 500ms ease-out forwards;
-      
-        /* hover transition */
-        transition: transform 600ms ease, box-shadow 600ms ease;
-      }
-      
-      .card:hover{
-        transform: translateY(-2px);
-      }
+      grid-column:span 12;
+      border:1px solid var(--line);
+      background:rgba(17,26,46,.75);
+      border-radius:16px;
+      padding:18px;
+      box-shadow:0 10px 30px rgba(0,0,0,.25);
+
+      /* appear on load */
+      opacity: 0;
+      transform: translateY(10px);
+      animation: cardIn 500ms ease-out forwards;
+
+      /* hover transition */
+      transition: transform 600ms ease, box-shadow 600ms ease;
+    }
+    .card:hover{
+      transform: translateY(-2px);
+    }
 
     @keyframes cardIn{to { opacity: 1; transform: translateY(0); }}
-      .card:nth-child(1){ animation-delay: 80ms; }
-      .card:nth-child(2){ animation-delay: 160ms; }
-      .card:nth-child(3){ animation-delay: 240ms; }
+    .card:nth-child(1){ animation-delay: 80ms; }
+    .card:nth-child(2){ animation-delay: 160ms; }
+    .card:nth-child(3){ animation-delay: 240ms; }
+
     @media (min-width: 900px){
       .card.half{grid-column: span 6;}
     }
 
     h2{margin:0 0 10px; font-size:18px}
     p{margin:0 0 12px; color:var(--muted)}
-    ul{margin:0; padding-left:18px; color:var(--muted)}
-    li{margin:6px 0}
 
     .figure{ margin: 12px 0 0; }
+
+    /* Base image styling */
     .shot{
       width:100%;
       border-radius:14px;
       border:1px solid var(--line);
       display:block;
+      will-change: transform;
     }
+
     .caption{
       margin-top:8px;
       font-size:13px;
       color:var(--muted);
-    }
-
-    .gallery{
-      display:grid;
-      gap:10px;
-      grid-template-columns: repeat(2, 1fr);
-      margin-top:12px;
-    }
-    @media (min-width: 900px){
-      .gallery{grid-template-columns: repeat(3, 1fr);}
     }
 
     .btns{display:flex; gap:10px; flex-wrap:wrap; margin-top:8px}
@@ -123,31 +106,97 @@
       border-color: rgba(122,162,255,.45);
     }
 
-    /* Small helper for section buttons inside cards */
     .card-actions{margin-top:12px}
-    /* Rotating image: slide-left only */
-    .shot{
-      will-change: opacity, transform;
-      transform-origin: center;
+
+    /* ===== Click-to-swipe rotator ===== */
+    .rotator{
+      position: relative;
+      overflow: hidden;
+      border-radius: 14px; /* match .shot */
     }
-    
-    /* slide-left transition states */
-    .rotator-slide-left-out{
-      opacity: 0;
-      transform: translateX(-14px);
-      transition: opacity 450ms ease, transform 450ms ease;
+
+    /* Right-side overlay arrow button */
+    .rotator-next{
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 54px;
+      height: 100%;
+      border: 0;
+      padding: 0;
+      cursor: pointer;
+      background: linear-gradient(to left, rgba(0,0,0,.35), rgba(0,0,0,0));
+      transition: opacity 200ms ease;
     }
-    
-    .rotator-slide-left-in{
-      opacity: 1;
-      transform: translateX(0);
-      transition: opacity 450ms ease, transform 450ms ease;
+
+    /* Arrow glyph */
+    .rotator-next::before{
+      content:"";
+      position:absolute;
+      top:50%;
+      right:18px;
+      width: 12px;
+      height: 12px;
+      border-right: 3px solid rgba(232,238,252,.85);
+      border-top: 3px solid rgba(232,238,252,.85);
+      transform: translateY(-50%) rotate(45deg);
     }
-        
+
+    /* Focus ring */
+    .rotator-next:focus-visible{
+      outline: 2px solid rgba(122,162,255,.7);
+      outline-offset: -2px;
+    }
+
+    /* Desktop behavior: only show on hover/focus */
+    @media (hover: hover) and (pointer: fine){
+      .rotator-next{
+        opacity: 0;
+        pointer-events: none;
+      }
+      .rotator:hover .rotator-next,
+      .rotator:focus-within .rotator-next{
+        opacity: .85;
+        pointer-events: auto;
+      }
+      .rotator:hover .rotator-next:hover{
+        opacity: 1;
+      }
+    }
+
+    /* Mobile/touch: always show */
+    @media (hover: none), (pointer: coarse){
+      .rotator-next{
+        opacity: .85;
+        pointer-events: auto;
+      }
+      .rotator-next:active{
+        opacity: 1;
+      }
+    }
+
+    /* Swipe animation classes */
+    .rotator-swipe-out{
+      transform: translateX(-100%);
+      transition: transform 450ms ease;
+    }
+
+    .rotator-overlay{
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: auto;
+      display: block;
+      border-radius: 14px;
+      border: 1px solid var(--line);
+      transform: translateX(100%);
+      transition: transform 450ms ease;
+      will-change: transform;
+      pointer-events: none;
+    }
   </style>
 </head>
-
- 
 
 <body>
   <div class="wrap">
@@ -155,50 +204,43 @@
 
     <header>
       <h1>Multi-Stimuli-Responsive Smart Materials for Soft Robotics</h1>
-      <p class="subtitle">
-        A detailed overview.
-      </p>
-
-      <!-- HERO IMAGE (place file at projects/project-1/img/hero.jpg) -->
-      <!-- <img class="hero" src="./img/hero.jpg" alt="Project 1 hero image"> -->
+      <p class="subtitle">A detailed overview.</p>
     </header>
-
 
     <main class="grid">
 
-      <!-- SECTION 1: Overview -->
+      <!-- Objective -->
       <section class="card">
         <h2>Objective</h2>
         <p>
-          Hydrogels are porous hydrophilic polymer networks that exhibit properties of both solids and liquids. They are multi-stimuli-responsive, largely bio-compatible, and broadly applicable in the field of soft robotics. 
-          <br>To addresses the lack of modelling dedicated for any specific of the material, I built a multi-physics simulation model, coupled with experimental validation, for the actuation response of a NaAc/AAm hydrogel under an electric field.
-
+          Hydrogels are porous hydrophilic polymer networks that exhibit properties of both solids and liquids. They are multi-stimuli-responsive, largely bio-compatible, and broadly applicable in the field of soft robotics.
+          <br>To address the lack of modelling dedicated for any specific material, I built a multi-physics simulation model, coupled with experimental validation, for the actuation response of a NaAc/AAm hydrogel under an electric field.
         </p>
-
-
-        
       </section>
 
-      <!-- SECTION 2: Methodology (was Feature 1) -->
+      <!-- Experimental Methodology -->
       <section class="card half">
         <h2>Experimental Methodology</h2>
         <p>High-level summary of your approach. Keep details for the Methodology page.</p>
+
         <div class="figure">
-          <img
-            class="shot js-rotator"
-            data-rotator="slide-left"
-            data-interval="3500"
-            data-images="./img/post_gel.jpg,./img/swollen.jpg,./img/bent_gel.png"
-            data-captions='[
-              "Post-gel state: after polymerization, before actuation",
-              "Swollen hydrogel sample, after equilibration in solution",
-              "Bent gel during actuation, showing curvature vs. time"
-            ]'
-            src="./img/post_gel.jpg"
-            alt="Card illustration"
-          >
+          <div class="rotator">
+            <img
+              class="shot js-rotator"
+              data-images="./img/post_gel.jpg,./img/swollen.jpg,./img/bent_gel.png"
+              data-captions='[
+                "Post-gel state: after polymerization, before actuation",
+                "Swollen hydrogel sample, after equilibration in solution",
+                "Bent gel during actuation, showing curvature vs. time"
+              ]'
+              src="./img/post_gel.jpg"
+              alt="Experimental methodology"
+            >
+            <button class="rotator-next" type="button" aria-label="Next image"></button>
+          </div>
+
           <div class="caption js-rotator-caption">
-             Post-gel state: after polymerization, before actuation
+            Post-gel state: after polymerization, before actuation
           </div>
         </div>
 
@@ -207,27 +249,29 @@
         </div>
       </section>
 
-
-      <!-- SECTION 2: sim Methodology (was Feature 1) -->
+      <!-- Simulational Methodology -->
       <section class="card half">
         <h2>Simulational Methodology</h2>
         <p>High-level summary of your approach. Keep details for the Methodology page.</p>
+
         <div class="figure">
-          <img
-            class="shot js-rotator"
-            data-rotator="slide-left"
-            data-interval="3500"
-            data-images="./img/flowchart1.png,./img/flowchart2.png,./img/flowchart3.png"
-            data-captions='[
-              "Flowchart of the computational methodology",
-              "Flowchart of the computational methodology",
-              "Flowchart of the computational methodology"
-            ]'
-            src="./img/flowchart1.png"
-            alt="Card illustration"
-          >
+          <div class="rotator">
+            <img
+              class="shot js-rotator"
+              data-images="./img/flowchart1.png,./img/flowchart2.png,./img/flowchart3.png"
+              data-captions='[
+                "Flowchart of the computational methodology",
+                "Flowchart of the computational methodology",
+                "Flowchart of the computational methodology"
+              ]'
+              src="./img/flowchart1.png"
+              alt="Simulational methodology"
+            >
+            <button class="rotator-next" type="button" aria-label="Next image"></button>
+          </div>
+
           <div class="caption js-rotator-caption">
-              Flowchart of the computational methodology
+            Flowchart of the computational methodology
           </div>
         </div>
 
@@ -236,27 +280,28 @@
         </div>
       </section>
 
-
-      
-      <!-- SECTION 3: Exp Results (was Feature 2) -->
+      <!-- Experimental Results -->
       <section class="card half">
         <h2>Experimental Results</h2>
-        <p>High-level summary of your approach. Keep details for the Methodology page.</p>
+        <p>High-level summary of your approach. Keep details for the Results page.</p>
+
         <div class="figure">
-          <img
-            class="shot js-rotator"
-            data-rotator="slide-left"
-            data-interval="3500"
-            data-images="./img/swell_data.png,./img/bend_data.png"
-            data-captions='[
-              "Experimental results from the swelling tests",
-              "Experimental results from the bending tests"
-            ]'
-            src="./img/swell_data.png"
-            alt="Card illustration"
-          >
+          <div class="rotator">
+            <img
+              class="shot js-rotator"
+              data-images="./img/swell_data.png,./img/bend_data.png"
+              data-captions='[
+                "Experimental results from the swelling tests",
+                "Experimental results from the bending tests"
+              ]'
+              src="./img/swell_data.png"
+              alt="Experimental results"
+            >
+            <button class="rotator-next" type="button" aria-label="Next image"></button>
+          </div>
+
           <div class="caption js-rotator-caption">
-             Experimental results from the swelling tests
+            Experimental results from the swelling tests
           </div>
         </div>
 
@@ -265,30 +310,32 @@
         </div>
       </section>
 
-      
-      <!-- SECTION 3: sim Results (was Feature 2) -->
+      <!-- Simulational Results -->
       <section class="card half">
         <h2>Simulational Results</h2>
         <p>Key findings, trade-offs, limitations, and what you would do next.</p>
-          <div class="figure">
-          <img
-            class="shot js-rotator"
-            data-rotator="slide-left"
-            data-interval="3500"
-            data-images="./img/voltage_varing.png,./img/ionic_electric.png,./img/dis_press.png,./img/difflen.png,./img/diverge.png,./img/solver_break.png"
-            data-captions='[
-              "Simulated hydrogel widith and displacement at different electric field strengths, validated against experimental results",
-              "Ionic and electric potential distribution across the computational domain",
-              "Displacement and fluid pressure distribution across the computational domain",
-              "One of the validations: simulated swollen width for different computational domain lengths",
-              "Convergence analysis of the simulation algorithm",
-              "An illustration of a solver breakdown scenario within the algorithm"  
-            ]'
-            src="./img/voltage_varing.png"
-            alt="Card illustration"
-          >
+
+        <div class="figure">
+          <div class="rotator">
+            <img
+              class="shot js-rotator"
+              data-images="./img/voltage_varing.png,./img/ionic_electric.png,./img/dis_press.png,./img/difflen.png,./img/diverge.png,./img/solver_break.png"
+              data-captions='[
+                "Simulated hydrogel width and displacement at different electric field strengths, validated against experimental results",
+                "Ionic and electric potential distribution across the computational domain",
+                "Displacement and fluid pressure distribution across the computational domain",
+                "One of the validations: simulated swollen width for different computational domain lengths",
+                "Convergence analysis of the simulation algorithm",
+                "An illustration of a solver breakdown scenario within the algorithm"
+              ]'
+              src="./img/voltage_varing.png"
+              alt="Simulational results"
+            >
+            <button class="rotator-next" type="button" aria-label="Next image"></button>
+          </div>
+
           <div class="caption js-rotator-caption">
-              Simulated hydrogel widith and displacement at different electric field strengths, validated against experimental results
+            Simulated hydrogel width and displacement at different electric field strengths, validated against experimental results
           </div>
         </div>
 
@@ -297,32 +344,26 @@
         </div>
       </section>
 
-      
-
-      <!-- SECTION 4: Small gallery (optional) -->
-      <section class="card">  <!-- this is a card, the cards above are half cards -->
+      <!-- Future Work -->
+      <section class="card">
         <h2>Future Work</h2>
-        <p>Optional: add more images for context. bullet poitns ?</p>
-
-       
+        <p>Optional: add more images for context. bullet points?</p>
       </section>
 
     </main>
   </div>
 
- <!-- javascript that enables my img transition -->
   <script>
   (() => {
-    const DEFAULT_INTERVAL = 3500;
-    const OUT_MS = 480; // match CSS
-  
+    const SWIPE_MS = 450;
+
     function parseList(str) {
       return (str || "")
         .split(",")
         .map(s => s.trim())
         .filter(Boolean);
     }
-  
+
     function parseJsonArray(str) {
       if (!str) return [];
       try {
@@ -332,108 +373,77 @@
         return [];
       }
     }
-  
+
     function preload(urls) {
       urls.forEach(u => { const i = new Image(); i.src = u; });
     }
-  
-    // Keep handles so we can pause/resume all from ONE visibility listener
-    const rotators = new Set();
-  
-    function startRotator(img) {
+
+    function initClickRotator(img) {
       const rawUrls = parseList(img.dataset.images);
       if (rawUrls.length <= 1) return;
-  
-      const captions = parseJsonArray(img.dataset.captions);
-      const captionEl = img.closest(".figure")?.querySelector(".js-rotator-caption") || null;
-      const interval = Number(img.dataset.interval) || DEFAULT_INTERVAL;
-  
-      // Normalize all urls and always rotate using normalized hrefs
+
       const urls = rawUrls.map(u => new URL(u, document.baseURI).href);
-  
-      // Determine initial index reliably
+      const captions = parseJsonArray(img.dataset.captions);
+
+      const figure = img.closest(".figure");
+      const rotator = img.closest(".rotator");
+      const captionEl = figure?.querySelector(".js-rotator-caption") || null;
+      const nextBtn = rotator?.querySelector(".rotator-next") || null;
+
+      if (!rotator || !nextBtn) return;
+
+      preload(rawUrls);
+
+      // Start index from current src
       const currentSrc = img.currentSrc || img.getAttribute("src") || rawUrls[0];
       const currentHref = new URL(currentSrc, document.baseURI).href;
       let idx = urls.indexOf(currentHref);
       if (idx === -1) idx = 0;
-  
-      preload(rawUrls); // preload original strings is fine
-  
-      img.classList.add("rotator-slide-left-in");
-      if (captionEl) captionEl.textContent = captions[idx] ?? "";
-  
-      let nextTimer = null;
-      let inTransition = false;
-      let paused = false;
-  
-      function clearNext() {
-        if (nextTimer) window.clearTimeout(nextTimer);
-        nextTimer = null;
-      }
-  
-      function scheduleNext(delay = interval) {
-        clearNext();
-        if (paused) return;
-        nextTimer = window.setTimeout(step, delay);
-      }
-  
-      function step() {
-        if (paused || inTransition) return;
-  
-        inTransition = true;
-  
-        // out
-        img.classList.remove("rotator-slide-left-in");
-        img.classList.add("rotator-slide-left-out");
-  
+
+      // Ensure caption matches initial image
+      if (captionEl) captionEl.textContent = captions[idx] ?? captionEl.textContent ?? "";
+
+      let busy = false;
+
+      nextBtn.addEventListener("click", () => {
+        if (busy) return;
+        busy = true;
+
+        const nextIdx = (idx + 1) % urls.length;
+
+        // Incoming overlay image
+        const overlay = document.createElement("img");
+        overlay.className = "rotator-overlay";
+        overlay.alt = img.alt || "Rotating image";
+        overlay.src = urls[nextIdx];
+
+        rotator.appendChild(overlay);
+
+        // Force layout so transitions apply
+        overlay.getBoundingClientRect();
+
+        // Animate: main slides out left, overlay slides in from right
+        img.classList.add("rotator-swipe-out");
+        overlay.style.transform = "translateX(0)";
+
         window.setTimeout(() => {
-          // If paused mid-transition, finish cleanly but do not schedule further.
-          idx = (idx + 1) % urls.length;
-          img.src = urls[idx];
+          // Commit new image + caption
+          img.src = urls[nextIdx];
+          idx = nextIdx;
+
           if (captionEl) captionEl.textContent = captions[idx] ?? "";
-  
-          img.classList.remove("rotator-slide-left-out");
-          img.classList.add("rotator-slide-left-in");
-  
-          inTransition = false;
-          scheduleNext(interval);
-        }, OUT_MS);
-      }
-  
-      function pause() {
-        paused = true;
-        clearNext();
-      }
-  
-      function resume() {
-        if (!paused) return;
-        paused = false;
-        // If we were paused mid-transition, let it settle and then continue
-        scheduleNext(inTransition ? OUT_MS : interval);
-      }
-  
-      img.addEventListener("mouseenter", pause);
-      img.addEventListener("mouseleave", resume);
-  
-      // Register this rotator for global pause/resume
-      rotators.add({ pause, resume });
-  
-      // Start
-      scheduleNext(interval);
+
+          // Reset and cleanup
+          img.classList.remove("rotator-swipe-out");
+          overlay.remove();
+
+          busy = false;
+        }, SWIPE_MS);
+      });
     }
-  
-    // Single global handler for all rotators (prevents per-rotator divergence)
-    document.addEventListener("visibilitychange", () => {
-      if (document.hidden) {
-        rotators.forEach(r => r.pause());
-      } else {
-        rotators.forEach(r => r.resume());
-      }
-    });
-  
-    document.querySelectorAll("img.js-rotator").forEach(startRotator);
+
+    document.querySelectorAll("img.js-rotator").forEach(initClickRotator);
   })();
   </script>
-  
 </body>
 </html>
