@@ -207,14 +207,28 @@
         </div>
       </section>
 
-      <!-- SECTION 3: Discussion (was Feature 2) -->
 
+      <!-- SECTION 2: sim Methodology (was Feature 1) -->
       <section class="card half">
-        <h2>Simulational Methodolgy</h2>
-        <p>Key findings, trade-offs, limitations, and what you would do next.</p>
+        <h2>Simulational Methodology</h2>
+        <p>High-level summary of your approach. Keep details for the Methodology page.</p>
         <div class="figure">
-          <img class="shot" src="./img/screen-2.png" alt="Discussion illustration">
-          <div class="caption">Caption describing what the image shows.</div>
+          <img
+            class="shot js-rotator"
+            data-rotator="slide-left"
+            data-interval="3500"
+            data-images="./img/flowchart1.png,./img/flowchart2.png,./img/flowchart3.png"
+            data-captions='[
+              "Flowchart of the computational methodology",
+              "Flowchart of the computational methodology",
+              "Flowchart of the computational methodology"
+            ]'
+            src="./img/flowchart1.png"
+            alt="Card illustration"
+          >
+          <div class="caption js-rotator-caption">
+              Flowchart of the computational methodology
+          </div>
         </div>
 
         <div class="btns card-actions">
@@ -222,12 +236,28 @@
         </div>
       </section>
 
+
+      
+      <!-- SECTION 3: Exp Results (was Feature 2) -->
       <section class="card half">
         <h2>Experimental Results</h2>
-        <p>Key findings, trade-offs, limitations, and what you would do next.</p>
+        <p>High-level summary of your approach. Keep details for the Methodology page.</p>
         <div class="figure">
-          <img class="shot" src="./img/screen-2.png" alt="Discussion illustration">
-          <div class="caption">Caption describing what the image shows.</div>
+          <img
+            class="shot js-rotator"
+            data-rotator="slide-left"
+            data-interval="3500"
+            data-images="./img/swell_data.png,./img/bend_data.png"
+            data-captions='[
+              "Experimental results from the swelling tests",
+              "Experimental results from the bending tests"
+            ]'
+            src="./img/swell_data.png"
+            alt="Card illustration"
+          >
+          <div class="caption js-rotator-caption">
+             Experimental results from the swelling tests
+          </div>
         </div>
 
         <div class="btns card-actions">
@@ -235,6 +265,8 @@
         </div>
       </section>
 
+      
+      <!-- SECTION 3: sim Results (was Feature 2) -->
       <section class="card half">
         <h2>Simulational Results</h2>
         <p>Key findings, trade-offs, limitations, and what you would do next.</p>
@@ -243,18 +275,20 @@
             class="shot js-rotator"
             data-rotator="slide-left"
             data-interval="3500"
-            data-images="./img/voltage_varing.png,./img/ionic_electric.png,./img/dis_press.png,./img/difflen.png"
+            data-images="./img/voltage_varing.png,./img/ionic_electric.png,./img/dis_press.png,./img/difflen.png,./img/diverge.png,./img/solver_break.png"
             data-captions='[
-              "Simulated hydrogel widith and displacement at different electric field strengths",
+              "Simulated hydrogel widith and displacement at different electric field strengths, validated against experimental results",
               "Ionic and electric potential distribution across the computational domain",
               "Displacement and fluid pressure distribution across the computational domain",
-              "One of the validations: simulated swollen width for different computational domain lengths" 
+              "One of the validations: simulated swollen width for different computational domain lengths",
+              "An illustration of a solver breakdown scenario within the algorithm",
+              "Convergence analysis of the simulation algorithm"   
             ]'
             src="./img/voltage_varing.png"
             alt="Card illustration"
           >
           <div class="caption js-rotator-caption">
-             Post-gel state: after polymerization, before actuation
+              Simulated hydrogel widith and displacement at different electric field strengths, validated against experimental results
           </div>
         </div>
 
