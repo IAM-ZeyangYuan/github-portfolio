@@ -55,7 +55,6 @@
 
       transition: transform 600ms ease, box-shadow 600ms ease;
 
-      /* NEW: two-column layout inside each card */
       display:flex;
       gap:18px;
       align-items:flex-start;
@@ -71,7 +70,6 @@
     .card:nth-child(6){ animation-delay: 480ms; }
     .card:nth-child(7){ animation-delay: 560ms; }
 
-    /* left/right regions */
     .card-left{
       flex: 1 1 auto;
       min-width: 0;
@@ -81,7 +79,6 @@
       min-width: 260px;
     }
 
-    /* Stack on smaller screens */
     @media (max-width: 820px){
       .card{ flex-direction: column; }
       .card-right{
@@ -94,8 +91,6 @@
     h2{margin:0 0 10px; font-size:18px}
     p{margin:0 0 12px; color:var(--muted)}
 
-    /* Your HTML had <ul> inside <p>, which is invalid.
-       Keep styling simple and readable. */
     ul{
       margin: 0;
       padding-left: 18px;
@@ -113,7 +108,6 @@
       will-change: transform;
     }
 
-    /* NEW: reserve space so buttons don't jump when caption changes lines */
     .caption{
       margin-top:8px;
       font-size:13px;
@@ -136,22 +130,20 @@
       background: rgba(11,18,32,.35);
       color:var(--text);
       min-width:120px;
+      cursor:pointer;
     }
     .btn.primary{
       background: rgba(122,162,255,.16);
       border-color: rgba(122,162,255,.45);
     }
 
-    .card-actions{margin-top:12px}
-
-    /* ===== Click-to-swipe rotator (hover-only arrows on desktop) ===== */
+    /* ===== Click-to-swipe rotator ===== */
     .rotator{
       position: relative;
       overflow: hidden;
       border-radius: 14px;
     }
 
-    /* Shared styles for both arrows */
     .rotator-btn{
       position: absolute;
       top: 0;
@@ -163,12 +155,10 @@
       transition: opacity 160ms ease;
       background: none;
 
-      /* hidden by default (desktop) */
       opacity: 0;
       pointer-events: none;
     }
 
-    /* Show arrows only while hovering the rotator (desktop) */
     @media (hover: hover) and (pointer: fine){
       .rotator:hover .rotator-btn{
         opacity: 1;
@@ -176,7 +166,6 @@
       }
     }
 
-    /* Mobile/touch: always show */
     @media (hover: none), (pointer: coarse){
       .rotator-btn{
         opacity: 1;
@@ -184,7 +173,6 @@
       }
     }
 
-    /* Left overlay */
     .rotator-prev{
       left: 0;
       background: linear-gradient(
@@ -195,7 +183,6 @@
       );
     }
 
-    /* Right overlay */
     .rotator-next{
       right: 0;
       background: linear-gradient(
@@ -206,7 +193,6 @@
       );
     }
 
-    /* Arrow icon (CSS borders) */
     .rotator-btn::before{
       content:"";
       position:absolute;
@@ -220,7 +206,6 @@
       z-index: 1;
     }
 
-    /* Circular backdrop behind arrow */
     .rotator-btn::after{
       content:"";
       position:absolute;
@@ -234,21 +219,18 @@
       z-index: 0;
     }
 
-    /* Left arrow rotation/position */
     .rotator-prev::before{
       left:18px;
       transform: translateY(-50%) rotate(-135deg);
     }
     .rotator-prev::after{ left:14px; }
 
-    /* Right arrow rotation/position */
     .rotator-next::before{
       right:18px;
       transform: translateY(-50%) rotate(45deg);
     }
     .rotator-next::after{ right:14px; }
 
-    /* Swipe animations for the current image */
     .rotator-swipe-left-out{
       transform: translateX(-100%);
       transition: transform 450ms ease;
@@ -258,7 +240,6 @@
       transition: transform 450ms ease;
     }
 
-    /* Incoming overlay image */
     .rotator-overlay{
       position: absolute;
       top: 0;
@@ -271,6 +252,82 @@
       will-change: transform;
       pointer-events: none;
       transition: transform 450ms ease;
+    }
+
+    /* ===== Modal ===== */
+    .modal{
+      position: fixed;
+      inset: 0;
+      display: none;
+      z-index: 999;
+    }
+    .modal[aria-hidden="false"]{
+      display: block;
+    }
+
+    .modal-backdrop{
+      position:absolute;
+      inset:0;
+      background: rgba(0,0,0,.55);
+      backdrop-filter: blur(3px);
+    }
+
+    .modal-panel{
+      position: relative;
+      max-width: 980px;
+      margin: 6vh auto;
+      padding: 0 18px;
+    }
+
+    .modal-card{
+      position: relative;
+      border:1px solid var(--line);
+      background: rgba(17,26,46,.92);
+      border-radius: 18px;
+      padding: 18px;
+      box-shadow: 0 18px 55px rgba(0,0,0,.45);
+
+      display:flex;
+      gap:18px;
+      align-items:flex-start;
+    }
+
+    @media (max-width: 820px){
+      .modal-panel{ margin: 4vh auto; }
+      .modal-card{ flex-direction: column; }
+    }
+
+    .modal-close{
+      position:absolute;
+      top: 12px;
+      right: 12px;
+      width: 38px;
+      height: 38px;
+      border-radius: 12px;
+      border: 1px solid var(--line);
+      background: rgba(11,18,32,.35);
+      color: var(--text);
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      line-height: 1;
+    }
+
+    .modal-title{
+      margin: 0 0 10px;
+      font-size: 18px;
+    }
+
+    /* inline button inside list item (small) */
+    .btn.inline{
+      padding: 6px 10px;
+      min-width: auto;
+      border-radius: 10px;
+      font-size: 13px;
+      margin-left: 10px;
+      vertical-align: middle;
     }
   </style>
 </head>
@@ -304,7 +361,7 @@
         <div class="card-left">
           <h2>Experimental Methodology</h2>
           <p>
-            I established a repeatable experimental system for fabricating hydrogel beams 
+            I established a repeatable experimental system for fabricating hydrogel beams
             and conducting deformation tests to validate the corresponding simulation.
           </p>
 
@@ -312,12 +369,16 @@
           <ul>
             <li>
               Fact20
+              <button
+                class="btn inline primary"
+                type="button"
+                data-open-modal="fact20-modal"
+              >See more</button>
             </li>
             <li>
               Fact1
             </li>
           </ul>
-          
         </div>
 
         <div class="card-right">
@@ -343,9 +404,7 @@
             </div>
           </div>
 
-          <div class="btns card-actions">
-            <a class="btn primary" href="./experimental-methodology/">See Details</a>
-          </div>
+          <!-- Removed See Details button -->
         </div>
       </section>
 
@@ -385,9 +444,7 @@
             </div>
           </div>
 
-          <div class="btns card-actions">
-            <a class="btn primary" href="./simulational-methodology/">See Details</a>
-          </div>
+          <!-- Removed See Details button -->
         </div>
       </section>
 
@@ -426,9 +483,7 @@
             </div>
           </div>
 
-          <div class="btns card-actions">
-            <a class="btn primary" href="./experimental-results/">See Details</a>
-          </div>
+          <!-- Removed See Details button -->
         </div>
       </section>
 
@@ -472,9 +527,7 @@
             </div>
           </div>
 
-          <div class="btns card-actions">
-            <a class="btn primary" href="./simulational-results/">See Details</a>
-          </div>
+          <!-- Removed See Details button -->
         </div>
       </section>
 
@@ -520,6 +573,57 @@
       </section>
 
     </main>
+  </div>
+
+  <!-- ===== Modal for Fact20 ===== -->
+  <div class="modal" id="fact20-modal" aria-hidden="true" aria-labelledby="fact20-title" role="dialog">
+    <div class="modal-backdrop" data-close-modal="fact20-modal"></div>
+
+    <div class="modal-panel" role="document">
+      <div class="modal-card">
+        <button class="modal-close" type="button" aria-label="Close" data-close-modal="fact20-modal">×</button>
+
+        <div class="card-left">
+          <h2 class="modal-title" id="fact20-title">Fact20 — Additional Details</h2>
+          <p>
+            Put your extended explanation here. Keep it structured:
+          </p>
+          <ul>
+            <li>What Fact20 means in context</li>
+            <li>Why it matters to the methodology/results</li>
+            <li>Any quantified observation or constraint</li>
+          </ul>
+          <p>
+            You can add more paragraphs or bullets as needed.
+          </p>
+        </div>
+
+        <div class="card-right">
+          <div class="figure">
+            <div class="rotator">
+              <img
+                class="shot js-rotator"
+                data-images="./img/post_gel.jpg,./img/swollen.jpg,./img/bent_gel.png"
+                data-captions='[
+                  "Hydrogel polymerization using an optimised molding system",
+                  "Swollen hydrogel beams, after equilibration in NaCl solution",
+                  "A bending hydrogel beam fixed in a NaCl solution under an electric field"
+                ]'
+                src="./img/post_gel.jpg"
+                alt="Fact20 details"
+              >
+              <button class="rotator-btn rotator-prev" type="button" aria-label="Previous image"></button>
+              <button class="rotator-btn rotator-next" type="button" aria-label="Next image"></button>
+            </div>
+
+            <div class="caption js-rotator-caption">
+              Hydrogel polymerization using an optimised molding system
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
   </div>
 
   <script>
@@ -587,7 +691,7 @@
         overlay.style.transform = (delta === 1) ? "translateX(100%)" : "translateX(-100%)";
 
         rotator.appendChild(overlay);
-        overlay.getBoundingClientRect(); // force layout
+        overlay.getBoundingClientRect();
 
         img.classList.add(delta === 1 ? "rotator-swipe-left-out" : "rotator-swipe-right-out");
         overlay.style.transform = "translateX(0)";
@@ -619,8 +723,52 @@
       });
     }
 
+    // Init rotators on the page
     document.querySelectorAll("img.js-rotator").forEach(initClickRotator);
+
+    // ===== Modal open/close =====
+    function openModal(modalId) {
+      const modal = document.getElementById(modalId);
+      if (!modal) return;
+
+      modal.setAttribute("aria-hidden", "false");
+      document.body.style.overflow = "hidden";
+
+      // Optional: focus close button for accessibility
+      const closeBtn = modal.querySelector("[data-close-modal]");
+      if (closeBtn) closeBtn.focus();
+    }
+
+    function closeModal(modalId) {
+      const modal = document.getElementById(modalId);
+      if (!modal) return;
+
+      modal.setAttribute("aria-hidden", "true");
+      document.body.style.overflow = "";
+    }
+
+    document.addEventListener("click", (e) => {
+      const openBtn = e.target.closest("[data-open-modal]");
+      if (openBtn) {
+        openModal(openBtn.getAttribute("data-open-modal"));
+        return;
+      }
+
+      const closeBtn = e.target.closest("[data-close-modal]");
+      if (closeBtn) {
+        closeModal(closeBtn.getAttribute("data-close-modal"));
+        return;
+      }
+    });
+
+    document.addEventListener("keydown", (e) => {
+      if (e.key !== "Escape") return;
+      const openModalEl = document.querySelector('.modal[aria-hidden="false"]');
+      if (!openModalEl) return;
+      closeModal(openModalEl.id);
+    });
   })();
   </script>
 </body>
 </html>
+
