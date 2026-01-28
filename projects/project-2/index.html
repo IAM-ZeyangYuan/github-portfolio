@@ -104,7 +104,20 @@
       padding-left: 18px;
       color: var(--muted);
     }
-    li{ margin: 8px 0; }
+    /* li{ margin: 8px 0; } */
+        /* List items with right-aligned inline buttons */
+    li{
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin: 8px 0;
+    }
+    
+    li .btn.inline{
+      margin-left: auto; /* pushes button to end of line */
+      white-space: nowrap;
+    }
+
 
     /* Plot-friendly figure surface */
     .figure{
@@ -128,8 +141,10 @@
       margin-top:8px;
       font-size:13px;
       color:var(--muted);
-
       line-height: 1.35;
+
+      text-align: center;   /* ← add this */
+      
       min-height: calc(1.35em * 2); /* reserve exactly 2 lines */
       overflow: hidden;
 
@@ -176,9 +191,10 @@
     }
     
     .dh-caption{
-      margin-top: 6px;
+      margin-bottom: 6px;   /* was margin-top */
       font-size: 13px;
       color: var(--muted);
+      text-align: center;   /* ← center caption */
     }
     
     .math{
@@ -434,6 +450,7 @@
           </p>
               <!-- DH table  -->
           <div class="dh-table-wrap" aria-label="DH parameters table">
+            <div class="dh-caption">DH parameters</div>
             <table class="dh-table">
               <thead>
                 <tr>
@@ -482,7 +499,7 @@
                 </tr>
               </tbody>
             </table>
-            <div class="dh-caption">DH parameters</div>
+    
           </div>
           <!-- /DH table -->
           
