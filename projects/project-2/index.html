@@ -104,23 +104,8 @@
       padding-left: 18px;
       color: var(--muted);
     }
-    /* li{ margin: 8px 0; } */
+    li{ margin: 8px 0; }
 
-    /* Put the Details button on the right, but only steal width for 1 line of height */
-    li.has-detail-btn > .btn.inline{
-      float: right;
-      margin-left: 14px;   /* gap between text and button */
-      margin-top: 2px;     /* optional: tweak vertical alignment */
-      line-height: 1;      /* keep it visually compact */
-      white-space: nowrap; /* prevent wrapping inside the button */
-    }
-    
-    /* Clear float so the next bullet doesn't get affected */
-    li.has-detail-btn::after{
-      content: "";
-      display: block;
-      clear: both;
-    }
 
 
 
